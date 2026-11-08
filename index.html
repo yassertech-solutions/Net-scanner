@@ -1,0 +1,1036 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050807">
+<title>YTS CYBER SPEED TEST</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bg:#050807;
+--panel:rgba(9,19,15,.94);
+--text:#edfff5;
+--muted:#82978c;
+--green:#00ff9c;
+--red:#ff3155;
+--blue:#55caff;
+--border:rgba(0,255,156,.23);
+--shadow:rgba(0,255,156,.12);
+}
+
+body.light{
+--bg:#edf3f7;
+--panel:rgba(255,255,255,.95);
+--text:#101e2a;
+--muted:#657786;
+--green:#087fbd;
+--red:#e53958;
+--blue:#087fbd;
+--border:rgba(8,127,189,.25);
+--shadow:rgba(8,127,189,.10);
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+min-height:100vh;
+background:var(--bg);
+color:var(--text);
+font-family:Inter,sans-serif;
+transition:.3s;
+overflow-x:hidden;
+}
+
+#matrix{
+position:fixed;
+inset:0;
+width:100%;
+height:100%;
+z-index:-2;
+opacity:.27;
+pointer-events:none;
+}
+
+body.light #matrix{opacity:.10}
+
+body:after{
+content:"";
+position:fixed;
+inset:0;
+z-index:-1;
+pointer-events:none;
+background:
+radial-gradient(ellipse at 50% 0%,var(--shadow),transparent 55%),
+linear-gradient(rgba(0,255,156,.05) 1px,transparent 1px),
+linear-gradient(90deg,rgba(0,255,156,.05) 1px,transparent 1px);
+background-size:auto,35px 35px,35px 35px;
+}
+
+header{
+max-width:1120px;
+margin:auto;
+padding:22px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:12px;
+border-bottom:1px solid var(--border);
+}
+
+.logo{
+font-family:Orbitron;
+font-weight:800;
+letter-spacing:2px;
+font-size:17px;
+}
+
+.logo span{color:var(--green)}
+
+.header-right{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.online{
+color:var(--green);
+border:1px solid var(--border);
+border-radius:30px;
+padding:8px 11px;
+font-size:9px;
+letter-spacing:1px;
+}
+
+.dot{
+display:inline-block;
+width:7px;
+height:7px;
+border-radius:50%;
+background:var(--green);
+box-shadow:0 0 10px var(--green);
+margin-right:5px;
+}
+
+.theme-btn{
+border:1px solid var(--border);
+background:var(--panel);
+color:var(--text);
+padding:10px 13px;
+border-radius:10px;
+font-weight:700;
+cursor:pointer;
+font-size:11px;
+}
+
+main{
+width:min(100% - 28px,950px);
+margin:42px auto 55px;
+}
+
+.hero{
+text-align:center;
+margin-bottom:28px;
+}
+
+.eyebrow{
+font-family:Orbitron;
+font-size:10px;
+letter-spacing:4px;
+color:var(--green);
+}
+
+h1{
+font-family:Orbitron;
+font-size:clamp(25px,5vw,43px);
+margin:17px 0 10px;
+}
+
+h1 span{color:var(--green)}
+
+.hero p{
+font-size:13px;
+color:var(--muted);
+}
+
+.terminal{
+margin:25px auto 0;
+max-width:520px;
+text-align:left;
+padding:15px 16px;
+background:var(--panel);
+border:1px solid var(--border);
+border-radius:12px;
+color:var(--green);
+font-family:monospace;
+font-size:11px;
+line-height:1.9;
+box-shadow:0 0 25px var(--shadow);
+}
+
+.terminal span{color:var(--red)}
+
+.device{
+margin-top:20px;
+background:var(--panel);
+border:1px solid var(--border);
+border-radius:17px;
+padding:19px;
+box-shadow:0 0 25px var(--shadow);
+}
+
+.section-head{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+padding-bottom:14px;
+border-bottom:1px solid var(--border);
+margin-bottom:15px;
+}
+
+.section-head strong{
+font-family:Orbitron;
+font-size:11px;
+letter-spacing:1px;
+}
+
+.scanning{
+font-size:9px;
+color:var(--green);
+letter-spacing:1px;
+}
+
+.device-info{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.device-item{
+background:var(--bg);
+border:1px solid var(--border);
+padding:15px;
+border-radius:12px;
+min-width:0;
+}
+
+.device-label{
+font-size:9px;
+color:var(--muted);
+letter-spacing:1px;
+margin-bottom:9px;
+}
+
+.device-value{
+font-size:14px;
+font-weight:700;
+overflow-wrap:anywhere;
+}
+
+.device-icon{
+font-size:20px;
+margin-bottom:9px;
+}
+
+.battery-bar{
+height:8px;
+background:var(--border);
+border-radius:20px;
+overflow:hidden;
+margin-top:12px;
+}
+
+.battery-fill{
+height:100%;
+width:0%;
+background:var(--green);
+border-radius:20px;
+transition:width .5s;
+}
+
+.device-note{
+font-size:10px;
+color:var(--muted);
+line-height:1.7;
+margin-top:14px;
+}
+
+.panel{
+margin-top:20px;
+background:var(--panel);
+border:1px solid var(--border);
+border-radius:23px;
+padding:27px 23px;
+box-shadow:0 20px 70px #0003,0 0 35px var(--shadow);
+backdrop-filter:blur(15px);
+}
+
+.panel-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:10px;
+border-bottom:1px solid var(--border);
+padding-bottom:15px;
+font-size:10px;
+letter-spacing:2px;
+color:var(--muted);
+}
+
+.panel-top strong{color:var(--green)}
+
+.gauge-wrap{
+width:min(100%,340px);
+margin:22px auto 0;
+position:relative;
+}
+
+.gauge{width:100%;display:block}
+
+.track{
+fill:none;
+stroke:var(--border);
+stroke-width:13;
+stroke-linecap:round;
+}
+
+.progress{
+fill:none;
+stroke:var(--green);
+stroke-width:13;
+stroke-linecap:round;
+stroke-dasharray:440;
+stroke-dashoffset:440;
+filter:drop-shadow(0 0 9px var(--green));
+transition:stroke-dashoffset .3s;
+}
+
+.gauge-center{
+position:absolute;
+inset:0;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+padding-top:34px;
+}
+
+.speed{
+font-family:Orbitron;
+font-size:48px;
+font-weight:800;
+}
+
+.unit{
+font-size:10px;
+color:var(--muted);
+letter-spacing:4px;
+}
+
+.phase{
+color:var(--green);
+font-family:Orbitron;
+font-size:10px;
+margin-top:13px;
+letter-spacing:2px;
+text-align:center;
+}
+
+.start{
+display:block;
+width:min(100%,300px);
+margin:12px auto 0;
+padding:17px;
+border:1px solid var(--green);
+border-radius:11px;
+background:var(--green);
+color:#03150d;
+font-family:Orbitron;
+font-size:12px;
+font-weight:800;
+letter-spacing:2px;
+cursor:pointer;
+box-shadow:0 0 25px var(--shadow);
+transition:.25s;
+}
+
+.start:hover{
+transform:translateY(-3px);
+filter:brightness(1.12);
+}
+
+.start:disabled{
+opacity:.5;
+cursor:not-allowed;
+transform:none;
+}
+
+.metrics{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+margin-top:28px;
+}
+
+.metric{
+background:var(--bg);
+border:1px solid var(--border);
+border-radius:14px;
+text-align:center;
+padding:19px 8px;
+}
+
+.metric .symbol{
+font-size:21px;
+margin-bottom:11px;
+color:var(--green);
+}
+
+.metric label{
+display:block;
+color:var(--muted);
+font-size:9px;
+letter-spacing:1.5px;
+margin-bottom:10px;
+}
+
+.metric strong{
+display:block;
+font-family:Orbitron;
+font-size:20px;
+}
+
+.metric small{
+color:var(--muted);
+font-size:10px;
+}
+
+.upload .symbol,.upload strong{color:var(--red)}
+.ping .symbol,.ping strong{color:var(--blue)}
+
+.info{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:10px;
+border-top:1px solid var(--border);
+margin-top:22px;
+padding-top:16px;
+color:var(--muted);
+font-size:10px;
+}
+
+.info b{color:var(--text)}
+
+.note{
+color:var(--muted);
+text-align:center;
+font-size:10px;
+line-height:1.8;
+margin:22px auto;
+max-width:600px;
+}
+
+footer{
+border-top:1px solid var(--border);
+padding:22px;
+text-align:center;
+color:var(--muted);
+font-size:10px;
+letter-spacing:2px;
+}
+
+footer b{color:var(--green)}
+
+#cursor{
+position:fixed;
+width:17px;
+height:17px;
+border:2px solid var(--green);
+transform:translate(-50%,-50%) rotate(45deg);
+pointer-events:none;
+z-index:9999;
+box-shadow:0 0 12px var(--green);
+display:none;
+}
+
+@media(pointer:fine){
+#cursor{display:block}
+body,button{cursor:none}
+}
+
+@media(max-width:550px){
+header{padding:17px 13px}
+.logo{font-size:13px}
+.online{font-size:8px}
+.theme-btn{font-size:9px;padding:9px}
+main{margin-top:32px}
+.panel{padding:20px 12px}
+.metrics{gap:7px}
+.metric{padding:15px 4px}
+.metric strong{font-size:15px}
+.metric label{font-size:8px}
+.device{padding:14px}
+.device-item{padding:12px}
+.device-value{font-size:12px}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="matrix"></canvas>
+<div id="cursor"></div>
+
+<header>
+  <div class="logo">YASSER<span> TECH</span></div>
+
+  <div class="header-right">
+    <div class="online"><i class="dot"></i>ONLINE</div>
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀ WHITE MODE</button>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="eyebrow">YTS // CYBER NETWORK LAB</div>
+
+  <h1>INTERNET <span>SPEED TEST</span></h1>
+
+  <p>Scan your connection. Measure your network performance.</p>
+
+  <div class="terminal" id="terminal">
+    <div>&gt; INITIALIZING NETWORK SCANNER...</div>
+    <div>&gt; SECURITY STATUS: <span>ACTIVE</span></div>
+    <div>&gt; SYSTEM: <span>READY FOR TEST</span></div>
+  </div>
+</section>
+
+<!-- DEVICE SCANNER -->
+
+<section class="device">
+
+  <div class="section-head">
+    <strong>◈ DEVICE SCANNER</strong>
+    <span class="scanning" id="deviceStatus">WAITING...</span>
+  </div>
+
+  <div class="device-info">
+
+    <div class="device-item">
+      <div class="device-icon">📱</div>
+      <div class="device-label">DEVICE / MODEL</div>
+      <div class="device-value" id="deviceName">Not scanned</div>
+    </div>
+
+    <div class="device-item">
+      <div class="device-icon">💻</div>
+      <div class="device-label">OPERATING SYSTEM</div>
+      <div class="device-value" id="osName">Not scanned</div>
+    </div>
+
+    <div class="device-item">
+      <div class="device-icon">🔋</div>
+      <div class="device-label">BATTERY LEVEL</div>
+      <div class="device-value" id="batteryLevel">Unavailable</div>
+      <div class="battery-bar">
+        <div class="battery-fill" id="batteryFill"></div>
+      </div>
+    </div>
+
+    <div class="device-item">
+      <div class="device-icon">⚡</div>
+      <div class="device-label">CHARGING STATUS</div>
+      <div class="device-value" id="chargingStatus">Unavailable</div>
+    </div>
+
+  </div>
+
+  <div class="device-note" id="deviceNote">
+    Device information will be checked when you start the scan.
+    Some browsers restrict access to device and battery details.
+  </div>
+
+</section>
+
+<!-- SPEED TEST -->
+
+<section class="panel">
+
+  <div class="panel-top">
+    <strong>◉ LIVE DIAGNOSTICS</strong>
+    <span>YTS-001 // SYSTEM</span>
+  </div>
+
+  <div class="gauge-wrap">
+
+    <svg class="gauge" viewBox="0 0 300 190">
+      <path class="track" d="M 42 155 A 108 108 0 0 1 258 155"/>
+      <path class="progress" id="arc" d="M 42 155 A 108 108 0 0 1 258 155"/>
+    </svg>
+
+    <div class="gauge-center">
+      <div class="speed" id="mainSpeed">--</div>
+      <div class="unit">Mbps</div>
+      <div class="phase" id="phase">AWAITING COMMAND</div>
+    </div>
+
+  </div>
+
+  <button class="start" id="startBtn" onclick="startTest()">
+    ▶ START SPEED TEST
+  </button>
+
+  <div class="metrics">
+
+    <div class="metric download">
+      <div class="symbol">↓</div>
+      <label>DOWNLOAD</label>
+      <strong id="download">--</strong>
+      <small>Mbps</small>
+    </div>
+
+    <div class="metric upload">
+      <div class="symbol">↑</div>
+      <label>UPLOAD</label>
+      <strong id="upload">--</strong>
+      <small>Mbps</small>
+    </div>
+
+    <div class="metric ping">
+      <div class="symbol">◉</div>
+      <label>LATENCY</label>
+      <strong id="ping">--</strong>
+      <small>ms</small>
+    </div>
+
+  </div>
+
+  <div class="info">
+    <span>NETWORK: <b id="connection">Detecting...</b></span>
+    <span>STATUS: <b id="testStatus">Standby</b></span>
+  </div>
+
+</section>
+
+<p class="note">
+  Results depend on your network, device and test server.
+  Avoid large downloads during testing. Each test uses internet data.
+</p>
+
+</main>
+
+<footer>
+POWERED BY <b>YASSER TECH SOLUTION</b> · YTS
+</footer>
+
+<script>
+
+// THEME SWITCH
+
+const themeBtn=document.getElementById("themeBtn");
+
+function applyTheme(theme){
+  document.body.classList.toggle("light",theme==="light");
+  themeBtn.textContent=theme==="light"?"☾ DARK MODE":"☀ WHITE MODE";
+
+  document.querySelector('meta[name="theme-color"]')
+  .setAttribute("content",theme==="light"?"#edf3f7":"#050807");
+}
+
+function toggleTheme(){
+  const next=document.body.classList.contains("light")?"dark":"light";
+  try{localStorage.setItem("yts-theme",next)}catch(e){}
+  applyTheme(next);
+}
+
+let savedTheme="dark";
+
+try{
+  savedTheme=localStorage.getItem("yts-theme")||"dark";
+}catch(e){}
+
+applyTheme(savedTheme);
+
+
+// MATRIX BACKGROUND
+
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+let columns=[];
+const fontSize=14;
+
+function resizeMatrix(){
+  canvas.width=window.innerWidth;
+  canvas.height=window.innerHeight;
+  columns=Array(Math.ceil(canvas.width/fontSize)).fill(1);
+}
+
+resizeMatrix();
+window.addEventListener("resize",resizeMatrix);
+
+const chars="01 YTS CYBER SYSTEM NETWORK";
+
+function drawMatrix(){
+
+  ctx.fillStyle=document.body.classList.contains("light")
+    ?"rgba(237,243,247,.12)"
+    :"rgba(5,8,7,.12)";
+
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  ctx.font=fontSize+"px monospace";
+
+  ctx.fillStyle=document.body.classList.contains("light")
+    ?"rgba(8,127,189,.55)"
+    :"rgba(0,255,156,.65)";
+
+  for(let i=0;i<columns.length;i++){
+
+    const char=chars[Math.floor(Math.random()*chars.length)];
+
+    ctx.fillText(char,i*fontSize,columns[i]*fontSize);
+
+    if(columns[i]*fontSize>canvas.height&&Math.random()>.975){
+      columns[i]=0;
+    }
+
+    columns[i]++;
+  }
+}
+
+setInterval(drawMatrix,65);
+
+
+// CUSTOM POINTER
+
+const cursor=document.getElementById("cursor");
+
+window.addEventListener("mousemove",e=>{
+  cursor.style.left=e.clientX+"px";
+  cursor.style.top=e.clientY+"px";
+});
+
+
+// DEVICE SCANNER
+
+function getDeviceInfo(){
+
+  const ua=navigator.userAgent;
+  let device="Unknown device";
+  let os="Unknown OS";
+
+  // Operating system
+
+  if(/iPhone/.test(ua)){
+    os="iOS";
+    device="iPhone";
+  }
+  else if(/iPad/.test(ua)){
+    os="iPadOS";
+    device="iPad";
+  }
+  else if(/Android/.test(ua)){
+    os="Android";
+    device="Android device";
+  }
+  else if(/Windows/.test(ua)){
+    os="Windows";
+    device="Windows PC";
+  }
+  else if(/Macintosh|Mac OS/.test(ua)){
+    os="macOS";
+    device="Mac";
+  }
+  else if(/Linux/.test(ua)){
+    os="Linux";
+    device="Linux device";
+  }
+
+  // Try more detailed Android model
+
+  if(/Android/.test(ua)){
+    const match=ua.match(/Android.*;\s*([^;)]+)\s*(?:Build\/|;|\))/i);
+    if(match&&match[1]){
+      device=match[1].trim();
+    }
+  }
+
+  // Browser userAgentData where available
+
+  if(navigator.userAgentData){
+    navigator.userAgentData.getHighEntropyValues(["model","platform"])
+    .then(info=>{
+      if(info.model){
+        document.getElementById("deviceName").textContent=info.model;
+      }
+      if(info.platform){
+        document.getElementById("osName").textContent=info.platform;
+      }
+    })
+    .catch(()=>{});
+  }
+
+  document.getElementById("deviceName").textContent=device;
+  document.getElementById("osName").textContent=os;
+
+  document.getElementById("deviceStatus").textContent="SCAN COMPLETE";
+
+  const note=document.getElementById("deviceNote");
+
+  note.textContent=
+  "Device information detected from browser. Exact model details may be restricted.";
+
+  // Battery API
+
+  if(navigator.getBattery){
+
+    navigator.getBattery()
+    .then(battery=>{
+
+      const percentage=Math.round(battery.level*100);
+
+      document.getElementById("batteryLevel").textContent=percentage+"%";
+
+      document.getElementById("batteryFill").style.width=percentage+"%";
+
+      document.getElementById("chargingStatus").textContent=
+      battery.charging?"Charging ⚡":"Not charging";
+
+      battery.addEventListener("levelchange",()=>{
+        const newLevel=Math.round(battery.level*100);
+
+        document.getElementById("batteryLevel").textContent=newLevel+"%";
+
+        document.getElementById("batteryFill").style.width=newLevel+"%";
+      });
+
+      battery.addEventListener("chargingchange",()=>{
+        document.getElementById("chargingStatus").textContent=
+        battery.charging?"Charging ⚡":"Not charging";
+      });
+
+    })
+    .catch(()=>{
+      document.getElementById("batteryLevel").textContent="Unavailable";
+      document.getElementById("chargingStatus").textContent="Unavailable";
+    });
+
+  }else{
+
+    document.getElementById("batteryLevel").textContent="Unavailable";
+    document.getElementById("chargingStatus").textContent="Unavailable";
+
+    note.textContent=
+    "Your browser does not provide battery information. Device and OS information may still be available.";
+  }
+}
+
+
+// SPEED TEST
+
+const SERVER="https://speed.cloudflare.com";
+const $=id=>document.getElementById(id);
+let running=false;
+
+function setProgress(value){
+  $("arc").style.strokeDashoffset=
+  440-440*Math.max(0,Math.min(1,value/100));
+}
+
+function showSpeed(value){
+  $("mainSpeed").textContent=
+  Number.isFinite(value)?value.toFixed(1):"--";
+}
+
+function connectionType(){
+  const c=navigator.connection||
+  navigator.mozConnection||
+  navigator.webkitConnection;
+
+  return c?.effectiveType?.toUpperCase()||"Unknown";
+}
+
+async function timedFetch(url,options={},timeout=20000){
+
+  const controller=new AbortController();
+
+  const timer=setTimeout(()=>controller.abort(),timeout);
+
+  try{
+
+    return await fetch(url,{
+      ...options,
+      signal:controller.signal,
+      cache:"no-store"
+    });
+
+  }finally{
+    clearTimeout(timer);
+  }
+}
+
+async function measurePing(){
+
+  const samples=[];
+
+  for(let i=0;i<5;i++){
+
+    const start=performance.now();
+
+    const r=await timedFetch(
+      SERVER+"/__down?bytes=1000&cb="+Math.random()
+    );
+
+    if(!r.ok)throw Error("Ping failed");
+
+    await r.arrayBuffer();
+
+    samples.push(performance.now()-start);
+  }
+
+  samples.sort((a,b)=>a-b);
+
+  return samples[2];
+}
+
+async function measureDownload(bytes){
+
+  const start=performance.now();
+
+  const r=await timedFetch(
+    SERVER+"/__down?bytes="+bytes+"&cb="+Math.random()
+  );
+
+  if(!r.ok)throw Error("Download failed");
+
+  const data=await r.arrayBuffer();
+
+  return data.byteLength*8/
+  ((performance.now()-start)/1000)/1000000;
+}
+
+async function measureUpload(bytes){
+
+  const data=new Uint8Array(bytes);
+
+  const start=performance.now();
+
+  const r=await timedFetch(
+    SERVER+"/__up?cb="+Math.random(),
+    {
+      method:"POST",
+      headers:{"Content-Type":"application/octet-stream"},
+      body:data
+    },
+    30000
+  );
+
+  if(!r.ok)throw Error("Upload failed");
+
+  await r.arrayBuffer();
+
+  return bytes*8/
+  ((performance.now()-start)/1000)/1000000;
+}
+
+async function startTest(){
+
+  if(running)return;
+
+  running=true;
+
+  const btn=$("startBtn");
+
+  btn.disabled=true;
+  btn.textContent="SCANNING NETWORK...";
+
+  $("connection").textContent=connectionType();
+  $("testStatus").textContent="Running";
+
+  $("download").textContent="--";
+  $("upload").textContent="--";
+  $("ping").textContent="--";
+
+  showSpeed(0);
+  setProgress(0);
+
+  $("deviceStatus").textContent="SCANNING...";
+  $("terminal").innerHTML=`
+  <div>&gt; INITIALIZING NETWORK SCANNER...</div>
+  <div>&gt; DEVICE SCANNER: <span>ACTIVE</span></div>
+  <div>&gt; ANALYZING DEVICE INFORMATION...</div>`;
+
+  // Read device information
+
+  getDeviceInfo();
+
+  try{
+
+    $("phase").textContent="CHECKING LATENCY";
+
+    $("ping").textContent=
+    Math.round(await measurePing());
+
+    $("phase").textContent="SCANNING DOWNLOAD";
+
+    const down=await measureDownload(5*1024*1024);
+
+    $("download").textContent=down.toFixed(1);
+
+    showSpeed(down);
+
+    setProgress(55);
+
+    $("phase").textContent="SCANNING UPLOAD";
+
+    const up=await measureUpload(2*1024*1024);
+
+    $("upload").textContent=up.toFixed(1);
+
+    showSpeed(up);
+
+    setProgress(100);
+
+    $("phase").textContent="SCAN COMPLETE";
+
+    $("testStatus").textContent="Completed";
+
+    $("terminal").innerHTML=`
+    <div>&gt; NETWORK SCAN: <span>COMPLETE</span></div>
+    <div>&gt; DEVICE INFORMATION: <span>CHECKED</span></div>
+    <div>&gt; SYSTEM: <span>ALL TESTS FINISHED</span></div>`;
+
+  }catch(error){
+
+    console.error(error);
+
+    $("phase").textContent="SCAN FAILED";
+    $("testStatus").textContent="Error";
+
+    $("terminal").innerHTML=`
+    <div>&gt; NETWORK SCAN: <span>FAILED</span></div>
+    <div>&gt; CHECK INTERNET CONNECTION</div>
+    <div>&gt; RETRY WHEN READY</div>`;
+
+    alert("Test haijakamilika. Angalia internet yako kisha jaribu tena.");
+
+  }finally{
+
+    running=false;
+
+    btn.disabled=false;
+    btn.textContent="↻ TEST AGAIN";
+  }
+}
+
+</script>
+
+</body>
+</html>
